@@ -21,7 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^grappelli/', include('grappelli.urls'), name='link_list'),
     url(r'^', include(('reptile.urls', 'reptile'), namespace='reptile')),
-    url(r'^api-auth/', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:

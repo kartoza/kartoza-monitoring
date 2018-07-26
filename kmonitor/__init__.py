@@ -2,7 +2,7 @@
 __author__ = 'Alison Mukoma <alison@kartoza.com>'
 __copyright__ = 'kartoza.com'
 
-# custom monitoring scripts
+# custom kmonitor scripts
 from prometheus_client import Counter
 
 landing_page_counter = Counter(

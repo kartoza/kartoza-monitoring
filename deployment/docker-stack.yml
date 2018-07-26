@@ -92,7 +92,7 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
     env_file:
-      - config.monitoring
+      - config.kmonitor
     networks:
       - monitor-net
     restart: always
