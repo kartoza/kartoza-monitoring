@@ -9,13 +9,6 @@ env:
     - DATABASE_URL='postgres://postgres:@localhost:5432/test_db'
     - SECRET_KEY='tT\xd7\xb06\xf7\x9b\xff\x0fZL\xca\xca\x11\xefM\xacr\xfb\xdf\xca\x9b'
     - DJANGO_SETTINGS_MODULE=core.settings.test_travis
-    - GF_SECURITY_ADMIN_PASSWORD=''
-    - EMAIL='alison@kartoza.com'
-    - DOMAIN='staging.limpopobims.com'
-    - ALERT_SLACK_USERNAME='kartoza'
-    - ALERT_SLACK_CHANNEL='biodiversity'
-    - ALERT_SLACK_INCOMING_WEBHOOK_URL=''
-
 
 sudo: false
 dist: trusty
