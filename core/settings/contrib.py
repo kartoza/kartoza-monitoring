@@ -48,36 +48,3 @@ INSTALLED_APPS += (
 MIDDLEWARE += (
     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
 )
-
-# Defines whether to log model related events,
-# such as when an object is created, updated, or deleted
-DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS = True
-
-# Defines whether to log user authentication events,
-# such as logins, logouts and failed logins.
-DJANGO_EASY_AUDIT_WATCH_AUTH_EVENTS = True
-
-# Defines whether to log URL requests made to the project
-DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = True
-
-SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'SCOPE': ['user:email', 'public_repo', 'read:org']
-    }
-}
-
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_SIGNUP_FORM_CLASS = 'base.forms.SignupForm'
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-LOGIN_REDIRECT_URL = "/"
-
-# ROLEPERMISSIONS_MODULE = 'roles.settings.roles'
-
-IUCN_API_URL = 'http://apiv3.iucnredlist.org/api/v3'
-
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-

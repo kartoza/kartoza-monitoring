@@ -12,7 +12,8 @@ from .contrib import *  # noqa
 
 # Project apps
 INSTALLED_APPS += (
- # project level app come here
+    # project level app come here
+    'monitoring',
 )
 
 # Set languages which want to be translated

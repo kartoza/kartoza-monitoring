@@ -36,6 +36,8 @@ setup(
             'Django==1.11',
             'django-prometheus==1.0.14',
             'prometheus_client==0.2.0',
+            'django-grappelli==2.11.1',
+            'django-pipeline==1.6.14',
         ],
         dependency_links=[
             'git+https://github.com/soynatan/django-easy-audit.git',
