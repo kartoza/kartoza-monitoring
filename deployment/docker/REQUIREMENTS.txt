@@ -1,0 +1,6 @@
+psycopg2-binary
+Django==1.11
+
+# prometheus monitoring support
+django-prometheus==1.0.14
+prometheus_client==0.2.0
