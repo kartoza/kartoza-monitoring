@@ -29,8 +29,22 @@ For deployment we use `docker`_ so you need to have docker
 running on the host. kartoza-monitoring is a django app so it will help if you have
 some knowledge of running a django site.
 
+
+
     git clone git://github.com/kartoza/kartoza-monitoring.git
-    
+
+    # to build the django docker environment run the following commands
+
+    make build
+
+    make permissions
+
+    make web
+
+    # Wait a few seconds for the DB to start before to do the next command
+
+    make migrate
+
     # to then build the monitoring stack run
 
     make monitoring
@@ -53,14 +67,3 @@ Thank you to the individual contributors who have helped to build kartoza-monito
 
 * Alison Mukoma: alison@kartoza.com
 
-
-.. _developer guide: https://github.com/kartoza/healthyrivers/blob/develop/README-dev.md
-.. _docker: http://docker.com
-.. |ready| image:: https://badge.waffle.io/kartoza/kartoza-monitoring.svg?label=ready&title=Ready
-.. |inprogress| image:: https://badge.waffle.io/kartoza/kartoza-monitoring.svg?label=in%20progress&title=In%20Progress
-.. |throughput_graph| image:: https://graphs.waffle.io/kartoza/kartoza-monitoring/throughput.svg
-.. |test_status_master| image:: https://travis-ci.org/kartoza/kartoza-monitoring
-.svg?branch=master
-.. |test_status_develop| image:: https://travis-ci.org/kartoza/kartoza-monitoring.svg?branch=develop
-.. |nbsp| unicode:: 0xA0
-   :trim:
