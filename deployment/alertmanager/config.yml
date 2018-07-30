@@ -5,6 +5,6 @@ receivers:
     - name: 'slack'
       slack_configs:
           - send_resolved: true
-            username: '<username>'
-            channel: '#<channel-name>'
+            username: 'sonlinux'
+            channel: '#biodiversity'
             api_url: '<incomming-webhook-url>'

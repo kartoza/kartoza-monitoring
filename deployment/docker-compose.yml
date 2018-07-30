@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 volumes:
     prometheus_data: {}
@@ -8,94 +8,23 @@ networks:
   front-end-network:
   back-end-network:
 
-db:
-  # Note you cannot scale if you use container_name
-  container_name: kmonitor-db
-  image: kartoza/postgis:9.6-2.4
-  volumes:
-    #- ./pg/postgres_data:/var/lib/postgresql
-    - ./backups:/backups
-    - ./sql:/sql
-  environment:
-    - USERNAME=docker
-    - PASS=docker
-  restart: unless-stopped
-#  Uncomment the next line to have an access with PGAdmin using localhost and port 25432 on your computer.
-#  Only for development !
-#  ports:
-#    - "25432:5432"
-
-uwsgi:
-  # Note you cannot scale if you use container_name
-  container_name: kmonitor-uwsgi
-  build: docker
-  hostname: uwsgi
-  environment:
-    - DATABASE_NAME=gis
-    - DATABASE_USERNAME=docker
-    - DATABASE_PASSWORD=docker
-    - DATABASE_HOST=db
-    - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-    - VIRTUAL_HOST=reptile.kartoza.com
-    - VIRTUAL_PORT=8080
-  volumes:
-    - ../../kartoza-monitoring:/home/web/django_project
-    - ./static:/home/web/static:rw
-    - ./media:/home/web/media:rw
-    - ./logs:/var/log/
-  links:
-    - db:db
-  restart: on-failure:5
-  user: root
-
-# This is normally the main entry point for a production server
-web:
-  # Note you cannot scale if you use container_name
-  container_name: kmonitor-web
-  image: nginx
-  hostname: nginx
-  volumes:
-    - ./sites-enabled:/etc/nginx/conf.d:ro
-    # I dont use volumes_from as I want to use the ro modifier
-    - ./static:/home/web/static:ro
-    - ./media:/home/web/media:ro
-    - ./logs:/var/log/nginx
-  links:
-    - uwsgi:uwsgi
-  restart: unless-stopped
-
-# This is the entry point for a development server.
-# Run with --no-deps to run attached to the services
-# from produ environment if wanted
-devweb:
-  # Note you cannot scale if you use container_name
-  container_name: kmonitor-dev-web
-  build: docker
-  dockerfile: Dockerfile-dev
-  hostname: uwsgi
-  environment:
-    - DATABASE_NAME=gis
-    - DATABASE_USERNAME=docker
-    - DATABASE_PASSWORD=docker
-    - DATABASE_HOST=db
-    - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-    - PYTHONPATH=/home/web/django_project
-    - VIRTUAL_HOST=reptile.kartoza.com
-    - VIRTUAL_PORT=8080
-  volumes:
-    - ../../kartoza-monitor:/home/web/django_project
-    - ./static:/home/web/static
-    - ./media:/home/web/media
-    - ./logs:/var/log/
-  links:
-    - db:db
-  ports:
-    # for django test server
-    - "55400:8080"
-    # for ssh
-    - "55600:22"
-
 services:
+
+  db:
+    # Note you cannot scale if you use container_name
+    container_name: kmonitor-db
+    image: kartoza/postgis:9.6-2.4
+    volumes:
+      - ./backups:/backups
+      - ./sql:/sql
+    environment:
+      - USERNAME=docker
+      - PASS=docker
+    restart: unless-stopped
+  #  Uncomment the next line to have an access with PGAdmin using localhost and port 25432 on your computer.
+  #  Only for development !
+  #  ports:
+  #    - "25432:5432"
 
   prometheus:
     container_name: prometheus
@@ -116,7 +45,7 @@ services:
     depends_on:
       - cadvisor
     networks:
-      - back-tier
+      - back-end-network
     restart: always
 #    deploy:
 #      placement:
@@ -138,7 +67,7 @@ services:
     ports:
       - 9100:9100
     networks:
-      - back-tier
+      - back-end-network
     restart: always
     deploy:
       mode: global
@@ -150,7 +79,7 @@ services:
     volumes:
       - ./alertmanager/:/etc/alertmanager/
     networks:
-      - back-tier
+      - back-end-network
     restart: always
     command:
       - '--config.file=/etc/alertmanager/config.yml'
@@ -170,7 +99,7 @@ services:
     ports:
       - 8080:8080
     networks:
-      - back-tier
+      - back-end-network
     restart: always
     deploy:
       mode: global
@@ -192,4 +121,3 @@ services:
       - back-end-network
       - front-end-network
     restart: always
-
